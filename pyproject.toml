@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "triton-sentence-transformer-tutorial"
+version = "0.1.0"
+description = ""
+authors = ["Rodion Proskuriakov <rproskuryakov.job@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+accelerate = "^0.33.0"
+onnx = "^1.16.2"
+onnxconverter-common = "^1.14.0"
+tritonclient = {extras = ["http"], version = "^2.48.0"}
+optimum = {extras = ["exporters"], version = "^1.21.2"}
+transformers = "^4.42.4"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+
+[tool.locust]
+locustfile = "locust_files/my_locust_file.py"
+headless = true
+master = true
+expect-workers = 5
+host = "https://localhost:8000"
+users = 100
+spawn-rate = 10
+run-time = "10m"
+tags = ["Critical", "Normal"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

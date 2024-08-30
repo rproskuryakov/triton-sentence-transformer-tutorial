@@ -1,0 +1,64 @@
+name: "multilingual-e5-large-ensemble"
+platform: "ensemble"
+input [
+  {
+    name: "INPUT_TEXT"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+output [
+  {
+    name: "OUTPUT"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+ensemble_scheduling {
+  step [
+    {
+      model_name: "multilingual-e5-large-preprocessing"
+      model_version: 1
+      input_map {
+        key: "text"
+        value: "INPUT_TEXT" # input of ensemble
+      }
+      output_map {
+        key: "output_attention_mask"
+        value: "OUTPUT_ATTENTION_MASK"
+      }
+      output_map {
+        key: "output_input_ids"
+        value: "OUTPUT_INPUT_IDS"
+      }
+    },
+    {
+      model_name: "multilingual-e5-small-onnx"
+      model_version: 1
+      input_map {
+        key: "attention_mask"
+        value: "OUTPUT_ATTENTION_MASK"
+      }
+      input_map {
+        key: "input_ids"
+        value: "OUTPUT_INPUT_IDS"
+      }
+      output_map {
+        key: "sentence_embedding"
+        value: "OUTPUT_EMBEDDING"
+      }
+    },
+    {
+      model_name: "multilingual-e5-small-postprocessing"
+      model_version: 1
+      input_map {
+        key: "input_vector"
+        value: "OUTPUT_EMBEDDING"
+      }
+      output_map {
+        key: "output_vector"
+        value: "OUTPUT"
+      }
+    }
+  ]
+}

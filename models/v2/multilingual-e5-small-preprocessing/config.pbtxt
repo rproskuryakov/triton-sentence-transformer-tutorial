@@ -1,0 +1,24 @@
+name: "multilingual-e5-large-preprocessing"
+backend: "python"
+input [
+{
+    name: "text"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+}
+]
+
+output [
+{
+    name: "output_attention_mask"
+    data_type: TYPE_INT64
+    dims: [ 512 ]
+}
+]
+output [
+{
+    name: "output_input_ids"
+    data_type: TYPE_INT64
+    dims: [ 512 ]
+}
+]

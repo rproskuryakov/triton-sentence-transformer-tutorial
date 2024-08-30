@@ -1,0 +1,24 @@
+name: "multilingual-e5-large-transformers"
+platform: "python"
+input [
+  {
+    name: "input_text"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+output [
+  {
+    name: "output_embedding"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+instance_group [
+  {
+    name: "hf_pipeline"
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]

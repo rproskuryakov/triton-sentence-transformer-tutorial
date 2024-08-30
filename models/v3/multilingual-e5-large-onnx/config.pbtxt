@@ -1,0 +1,60 @@
+name: "multilingual-e5-large-onnx"
+backend: "onnxruntime"
+max_batch_size: 64
+input [
+  {
+    name: "attention_mask"
+    data_type: TYPE_INT64
+    dims: [ -1 ]
+  }
+]
+input [
+  {
+    name: "input_ids"
+    data_type: TYPE_INT64
+    dims: [ -1 ]
+  }
+]
+output [
+  {
+    name: "sentence_embedding"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+instance_group [
+  {
+    name: "onnx_gpu_group"
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]
+version_policy: { specific: { versions: [1]}}
+optimization { execution_accelerators {
+  gpu_execution_accelerator : [ {
+    name : "tensorrt"
+    parameters { key: "precision_mode" value: "FP16" }
+    parameters { key: "max_workspace_size_bytes" value: "1073741824" }
+    parameters { key: "trt_detailed_build_log" value: "true"}}]
+}}
+model_warmup {
+  name: "onnx_ort_warmup"
+  batch_size: 256
+  inputs: {
+    key: "attention_mask"
+    value: {
+      data_type: TYPE_INT64
+      dims: [ 7 ]
+      input_data_file: "raw_attention_mask"
+    }
+  }
+  inputs: {
+    key: "input_ids"
+    value: {
+      data_type: TYPE_INT64
+      dims: [ 7 ]
+      input_data_file: "raw_input_ids"
+    }
+  }
+}

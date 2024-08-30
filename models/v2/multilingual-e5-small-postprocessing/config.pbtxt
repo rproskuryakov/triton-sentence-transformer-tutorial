@@ -1,0 +1,18 @@
+name: "multilingual-e5-large-postprocessing"
+backend: "python"
+input [
+  {
+    name: "input_vector"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+output [
+  {
+    name: "output_vector"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+
+
