@@ -12,7 +12,7 @@ class TritonPythonModel:
     def initialize(self, args):
         self._model = pipeline(
             "feature-extraction",
-            model="intfloat/multilingual-e5-large",
+            model="intfloat/multilingual-e5-small",
             device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
         )
 

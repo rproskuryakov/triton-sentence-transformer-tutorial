@@ -1,4 +1,4 @@
-name: "multilingual-e5-large-onnx"
+name: "multilingual-e5-small-onnx"
 backend: "onnxruntime"
 input [
   {

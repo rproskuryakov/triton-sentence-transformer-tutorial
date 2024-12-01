@@ -1,4 +1,4 @@
-name: "multilingual-e5-large-ensemble"
+name: "multilingual-e5-small-ensemble"
 platform: "ensemble"
 input [
   {
@@ -17,7 +17,7 @@ output [
 ensemble_scheduling {
   step [
     {
-      model_name: "multilingual-e5-large-preprocessing"
+      model_name: "multilingual-e5-small-preprocessing"
       model_version: 1
       input_map {
         key: "text"

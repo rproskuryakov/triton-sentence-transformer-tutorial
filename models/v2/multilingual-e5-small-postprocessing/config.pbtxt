@@ -1,4 +1,4 @@
-name: "multilingual-e5-large-postprocessing"
+name: "multilingual-e5-small-postprocessing"
 backend: "python"
 input [
   {
