@@ -1,0 +1,32 @@
+name: "multilingual-e5-large-onnx"
+backend: "onnxruntime"
+max_batch_size: 256
+input [
+  {
+    name: "input_ids"
+    data_type: TYPE_INT64
+    dims: [ -1 ]
+  }
+]
+input [
+  {
+    name: "attention_mask"
+    data_type: TYPE_INT64
+    dims: [ -1 ]
+  }
+]
+output [
+  {
+    name: "sentence_embedding"
+    data_type: TYPE_FP32
+    dims: [ 1024 ]
+  }
+]
+instance_group [
+  {
+    name: "onnx_gpu_group"
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]

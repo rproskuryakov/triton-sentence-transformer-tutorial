@@ -1,5 +1,6 @@
-name: "multilingual-e5-small-preprocessing"
+name: "multilingual-e5-large-preprocessing"
 backend: "python"
+max_batch_size: 256
 input [
 {
     name: "text"

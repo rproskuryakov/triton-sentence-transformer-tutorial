@@ -1,10 +1,11 @@
-name: "multilingual-e5-small-postprocessing"
+name: "multilingual-e5-large-postprocessing"
 backend: "python"
+max_batch_size: 256
 input [
   {
     name: "input_vector"
     data_type: TYPE_FP32
-    dims: [ 384 ]
+    dims: [ 1024 ]
   }
 ]
 
@@ -12,7 +13,7 @@ output [
   {
     name: "output_vector"
     data_type: TYPE_FP32
-    dims: [ 384 ]
+    dims: [ 1024 ]
   }
 ]
 

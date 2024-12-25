@@ -1,5 +1,6 @@
-name: "multilingual-e5-small-ensemble"
+name: "multilingual-e5-large"
 platform: "ensemble"
+max_batch_size: 256
 input [
   {
     name: "INPUT_TEXT"
@@ -9,15 +10,15 @@ input [
 ]
 output [
   {
-    name: "OUTPUT"
+    name: "OUTPUTS"
     data_type: TYPE_FP32
-    dims: [ 384 ]
+    dims: [ 1024 ]
   }
 ]
 ensemble_scheduling {
   step [
     {
-      model_name: "multilingual-e5-small-preprocessing"
+      model_name: "multilingual-e5-large-preprocessing"
       model_version: 1
       input_map {
         key: "text"
@@ -33,7 +34,7 @@ ensemble_scheduling {
       }
     },
     {
-      model_name: "multilingual-e5-small-onnx"
+      model_name: "multilingual-e5-large-onnx"
       model_version: 1
       input_map {
         key: "attention_mask"
@@ -49,7 +50,7 @@ ensemble_scheduling {
       }
     },
     {
-      model_name: "multilingual-e5-small-postprocessing"
+      model_name: "multilingual-e5-large-postprocessing"
       model_version: 1
       input_map {
         key: "input_vector"

@@ -1,0 +1,25 @@
+name: "multilingual-e5-large"
+backend: "python"
+max_batch_size: 256
+input [
+  {
+    name: "INPUT_TEXT"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+output [
+  {
+    name: "OUTPUTS"
+    data_type: TYPE_FP32
+    dims: [ 1024 ]
+  }
+]
+instance_group [
+  {
+    name: "hf_pipeline"
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]

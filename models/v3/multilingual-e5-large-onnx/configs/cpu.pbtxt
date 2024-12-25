@@ -1,6 +1,6 @@
-name: "multilingual-e5-small-onnx"
+name: "multilingual-e5-large-onnx"
 backend: "onnxruntime"
-max_batch_size: 64
+max_batch_size: 256
 input [
   {
     name: "attention_mask"
@@ -19,7 +19,7 @@ output [
   {
     name: "sentence_embedding"
     data_type: TYPE_FP32
-    dims: [ 384 ]
+    dims: [ 1024 ]
   }
 ]
 instance_group [
@@ -31,13 +31,13 @@ instance_group [
   }
 ]
 version_policy: { specific: { versions: [1]}}
-optimization { execution_accelerators {
-  gpu_execution_accelerator : [ {
-    name : "tensorrt"
-    parameters { key: "precision_mode" value: "FP16" }
-    parameters { key: "max_workspace_size_bytes" value: "1073741824" }
-    parameters { key: "trt_detailed_build_log" value: "true"}}]
-}}
+#optimization { execution_accelerators {
+#  gpu_execution_accelerator : [ {
+#    name : "tensorrt"
+#    parameters { key: "precision_mode" value: "FP16" }
+#    parameters { key: "max_workspace_size_bytes" value: "1073741824" }
+#    parameters { key: "trt_detailed_build_log" value: "true"}}]
+#}}
 model_warmup {
   name: "onnx_ort_warmup"
   batch_size: 256

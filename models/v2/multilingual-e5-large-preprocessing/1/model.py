@@ -11,11 +11,12 @@ class TritonPythonModel:
 
     def execute(self, requests):
         responses = []
-
+        print(requests, flush=True)
         for request in requests:
             input_ = pb_utils.get_input_tensor_by_name(request, "text")
             input_string = input_.as_numpy()
             requests_texts = [i[0].decode("utf-8") for i in input_string]
+            print(requests_texts, flush=True)
 
             batch = self._tokenizer(
                 requests_texts,
@@ -38,5 +39,5 @@ class TritonPythonModel:
                     ]
                 )
             )
-
+        print(responses, flush=True)
         return responses
