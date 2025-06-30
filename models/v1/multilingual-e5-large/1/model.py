@@ -36,12 +36,12 @@ class TritonPythonModel:
             )
             outputs = self._model(**batch_dict)
             tensor = pb_utils.Tensor(
-                            "OUTPUTS",
-                            F.normalize(
-                            average_pool(outputs.last_hidden_state, batch_dict["attention_mask"]),
-                            p=2, dim=1).cpu().detach().numpy()                          ,
-                        )
-            print(tensor, flush=True)
+                "OUTPUTS",
+                F.normalize(
+                    average_pool(outputs.last_hidden_state, batch_dict["attention_mask"]),
+                    p=2, dim=1
+                ).cpu().detach().numpy()                          ,
+            )
             responses.append(
                 pb_utils.InferenceResponse(
                     output_tensors=[

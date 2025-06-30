@@ -10,7 +10,7 @@ input [
 ]
 output [
   {
-    name: "OUTPUTS"
+    name: "OUTPUT"
     data_type: TYPE_FP32
     dims: [ 1024 ]
   }
@@ -63,3 +63,7 @@ ensemble_scheduling {
     }
   ]
 }
+
+
+I0629 21:58:07.778384 1 model_lifecycle.cc:849] "successfully loaded 'multilingual-e5-large-onnx'"
+E0629 21:58:07.778561 1 model_repository_manager.cc:703] "Invalid argument: in ensemble multilingual-e5-large, ensemble tensor OUTPUT_EMBEDDING is mapping to non-existing input sentence_embedding in model multilingual-e5-large-postprocessing"

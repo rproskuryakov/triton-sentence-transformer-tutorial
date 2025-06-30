@@ -1,0 +1,60 @@
+noisyrave@compute-vm-28-119-100-ssd-1751228086060:~/tutorial$ make load-test
+sudo docker pull nvcr.io/nvidia/tritonserver:25.03-py3-sdk
+25.03-py3-sdk: Pulling from nvidia/tritonserver
+Digest: sha256:84ec9f520329640a68ab31c45eeac238f5e1969725c2a72067169dff46199fae
+Status: Image is up to date for nvcr.io/nvidia/tritonserver:25.03-py3-sdk
+nvcr.io/nvidia/tritonserver:25.03-py3-sdk
+sudo docker run --rm -it --net host -v./testing/:/testing/ \
+        nvcr.io/nvidia/tritonserver:25.03-py3-sdk \
+        perf_analyzer -m multilingual-e5-large \
+        --measurement-interval=30000 \
+        --input-data=/testing/input_data.json \
+        -b 1 \
+        -f /testing/reports/latency_results_v1.csv \
+        --verbose-csv
+
+=================================
+== Triton Inference Server SDK ==
+=================================
+
+NVIDIA Release 25.03 (build 155069325)
+
+Copyright (c) 2018-2025, NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+GOVERNING TERMS: The software and materials are governed by the NVIDIA Software License Agreement
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/)
+and the Product-Specific Terms for NVIDIA AI Products
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/).
+
+WARNING: The NVIDIA Driver was not detected.  GPU functionality will not be available.
+   Use the NVIDIA Container Toolkit to start this container with GPU support; see
+   https://docs.nvidia.com/datacenter/cloud-native/ .
+
+ Successfully read data for 1 stream/streams with 4 step/steps.
+*** Measurement Settings ***
+  Batch size: 1
+  Service Kind: TRITON
+  Using "time_windows" mode for stabilization
+  Stabilizing using average latency and throughput
+  Measurement window: 30000 msec
+  Using synchronous calls for inference
+
+Request concurrency: 1
+  Client:
+    Request count: 531
+    Throughput: 4.91635 infer/sec
+    Avg latency: 202882 usec (standard deviation 112150 usec)
+    p50 latency: 154870 usec
+    p90 latency: 385651 usec
+    p95 latency: 393308 usec
+    p99 latency: 405660 usec
+    Avg HTTP time: 202875 usec (send/recv 88 usec + response wait 202787 usec)
+  Server:
+    Inference count: 531
+    Execution count: 531
+    Successful request count: 531
+    Avg request latency: 202294 usec (overhead 3 usec + queue 49 usec + compute input 25 usec + compute infer 202119 usec + compute output 97 usec)
+Inferences/Second vs. Client Average Batch Latency
+Concurrency: 1, throughput: 4.91635 infer/sec, latency 202882 usec
