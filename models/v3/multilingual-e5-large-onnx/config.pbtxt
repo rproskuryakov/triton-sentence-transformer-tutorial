@@ -39,14 +39,14 @@ optimization { execution_accelerators {
     parameters { key: "trt_detailed_build_log" value: "true"}}]
 }}
 model_warmup {
-  name: "onnx_ort_warmup"
-  batch_size: 256
+  name: "onnx_ort_warmup_min"
+  batch_size: 1
   inputs: {
     key: "attention_mask"
     value: {
       data_type: TYPE_INT64
       dims: [ 7 ]
-      input_data_file: "raw_attention_mask"
+      input_data_file: "1/raw_attention_mask"
     }
   }
   inputs: {
@@ -54,7 +54,27 @@ model_warmup {
     value: {
       data_type: TYPE_INT64
       dims: [ 7 ]
-      input_data_file: "raw_input_ids"
+      input_data_file: "1/raw_input_ids"
+    }
+  }
+}
+model_warmup {
+  name: "onnx_ort_warmup_max"
+  batch_size: 256
+  inputs: {
+    key: "attention_mask"
+    value: {
+      data_type: TYPE_INT64
+      dims: [ 7 ]
+      input_data_file: "256/raw_attention_mask"
+    }
+  }
+  inputs: {
+    key: "input_ids"
+    value: {
+      data_type: TYPE_INT64
+      dims: [ 7 ]
+      input_data_file: "256/raw_input_ids"
     }
   }
 }
